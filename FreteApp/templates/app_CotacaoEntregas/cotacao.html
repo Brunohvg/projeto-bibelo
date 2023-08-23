@@ -1,0 +1,219 @@
+{% extends "base.html" %}
+{% load bootstrap %}
+{% block conteudo %}
+<div class="header_teste">
+    <h3>
+        <p class="text-center"><strong>CALCULADORA DE FRETES</strong></p>
+    </h3>
+    <h6>
+        <p class="text-center">Faça a cotação do valor do envio e selecione a melhor opção para você.</p>
+    </h6>
+</div>
+
+<form class="row g-3" action="" method="post">
+    {% csrf_token %}
+
+
+
+    <div class="col-md-12">
+        <label for="cep" class="form-label">CEP</label>
+        <input type="int" max="9" class="form-control" id="cep" name="cep" placeholder="Digite seu CEP" aria-label="CEP"
+            aria-describedby="button-addon2">
+    </div>
+    <div class="col-md-3">
+        <label for="altura" class="form-label">Altura</label>
+        <input type="number" class="form-control" id="altura" name="altura" placeholder="Altura" value="2">
+    </div>
+
+    <div class="col-md-3">
+        <label for="largura" class="form-label">Largura</label>
+        <input type="number" class="form-control" id="largura" name="largura" placeholder="Largura" value="12">
+    </div>
+
+    <div class="col-md-3">
+        <label for="comprimento" class="form-label">Comprimento</label>
+        <input type="number" class="form-control" id="comprimento" name="comprimento" placeholder="Comprimento"
+            value="17">
+    </div>
+
+    <div class="col-md-3">
+        <label for="peso" class="form-label">Peso</label>
+        <input type="number" class="form-control" id="peso" name="peso" placeholder="Peso" min="0" max="30" value="2">
+    </div>
+
+    <div></div><!-- Contêiner flexível -->
+    <button class="btn btn-outline-secondary btn-custom" type="submit" id="button-addon2">CONSULTAR</button>
+    </div>
+</form>
+
+{% if cidade %}
+
+<div class="card-header">
+    <div class="text-center custom-texto-valor">
+        <h6>
+            <p class="custom-texto-valor">Endereço para entrega</p>
+            <p class="custom-texto-valor">{{ rua }}, {{ bairro }} - {{ cidade }} - {{ uf }} - {{ cep }}</p>
+        </h6>
+    </div>
+</div>
+
+{% else %}
+
+<div class="card-header">
+    <p class="text-center custom-texto-valor">{{ erro }}</p>
+</div>
+{% endif %}
+
+<div class="row">
+    <!-- Card SEDEX -->
+    {% if cep %}
+    <div class="col-md-4 card-body">
+
+        <div class="card custom-card-body-r">
+            <div class="card-header custom-card-header">
+                <p>
+                <h4 class="text-center custom-card-header">SEDEX</h4>
+                </p>
+            </div>
+            <div class="card-body custom-card-body">
+                {% if temposedex == '1' %}
+                <p class="card-text text-center">Prazo para entrega após postagem é de {{ temposedex }} dia</p>
+                {% else %}
+                <p class="card-text text-center">Prazo para entrega após postagem é de {{ temposedex }} dias</p>
+                {% endif %}
+                <p class="text-center custom-texto-valor">R$ {{ valorsedex }}</p>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-md-4 card-body">
+
+        <div class="card custom-card-body-r">
+            <!--<img src="{URL_DA_IMAGEM_PAC}" class="card-img-top" alt="Imagem PAC">-->
+            <div class="card-header custom-card-header-pac">
+                <p>
+                <h4 class="text-center custom-card-header-pac">PAC</h4>
+                </p>
+            </div>
+            <div class="card-body custom-card-body">
+                {% if valorsedex < valorpac %} <p class="card-text text-center">Este endereço não possui a modalidade de
+                    frete via pac</p>
+                    <p class="text-center custom-texto-valor">INDISPONÍVEL</p>
+                    {% else %}
+                    <p class="card-text text-center">Prazo para entrega após postagem é de {{ tempopac }} dias</p>
+                    <p class="text-center custom-texto-valor">R$ {{ valorpac }}</p>
+                    {% endif %}
+            </div>
+        </div>
+    </div>
+
+    <div class="col-md-4 card-body">
+
+        <div class="card custom-card-body-r">
+            <!--    <img src="{URL_DA_IMAGEM_MOTOBOY}" class="card-img-top" alt="Imagem Motoboy">-->
+            <div class="card-header custom-card-header-motoboy">
+                <p>
+                <h4 class="text-center custom-card-header-motoboy">MOTOBOY</h4>
+                </p>
+            </div>
+            <div class="card-body">
+                <p class="card-text text-center">Prazo para entrega após postagem é de 1 dia</p>
+
+                <!-- Button trigger modal -->
+
+                <div class="d-flex justify-content-center">
+                    <button type="button" class="btn btn-primary custom-btn-modala" data-bs-toggle="modal"
+                        data-bs-target="#exampleModal">
+                        Solicitar - R$ {{ valormotoboy }}
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+
+    <!-- Modal -->
+    <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">CADASTRAR ENTREGA</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <form class="row g-3" action="{% url 'entregas' %}" method="post">
+                        {% csrf_token %}
+
+                        <div class="col-md-2">
+                            {{ form.n_pedido|bootstrap}}
+                        </div>
+
+                        <div class="col-md-4">
+                            {{ form.nome|bootstrap }}
+                        </div>
+
+                        <div class="col-md-3">
+                            {{ form.telefone|bootstrap }}
+                        </div>
+                        <div class="col-md-3">
+                            {{ formEndereco.cep|bootstrap}}
+                        </div>
+
+                        <div class="col-md-4">
+                            {{ formEndereco.rua|bootstrap}}
+                        </div>
+
+                        <div class="col-md-2">
+                            {{ formEndereco.numero|bootstrap}}
+                        </div>
+
+                        <div class="col-md-4">
+                            {{ formEndereco.bairro|bootstrap}}
+                        </div>
+
+                        <div class="col-md-2">
+                            {{ formEndereco.cidade|bootstrap}}
+                        </div>
+
+                        <div class="col-md-4">
+                            {{ formEndereco.complemento|bootstrap}}
+                        </div>
+
+                        <div class="col-md-2">
+                            {{ form.motoboy_pago|bootstrap}}
+                        </div>
+
+                        <div class="col-md-2">
+                            {{ form.valor_boy|bootstrap}}
+                        </div>
+
+                        <div class="col-md-2">
+                            {{ form.pedido_pago|bootstrap}}
+                        </div>
+
+                        <div class="col-md-2">
+                            {{ form.valor_pedido|bootstrap}}
+                        </div>
+
+                        <div class="col-md-12">
+                            {{ formEndereco.infor_adicional|bootstrap}}
+                        </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fechar</button>
+                    <button type="submit" class="btn btn-primary custom-btn-modala">Salvar</button>
+                </div>
+                </form>
+
+            </div>
+
+        </div>
+    </div>
+</div>
+
+
+
+{% endif %}
+</div>
+{% endblock conteudo %}
