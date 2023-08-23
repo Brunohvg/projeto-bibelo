@@ -1,0 +1,6 @@
+{
+    "explorer.fileNesting.enabled": false,
+    "task.quickOpen.showAll": false,
+    "editor.pasteAs.enabled": true,
+    "editor.formatOnPaste": false
+}
