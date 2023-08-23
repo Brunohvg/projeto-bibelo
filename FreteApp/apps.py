@@ -2,5 +2,5 @@ from django.apps import AppConfig
 
 
 class FreteappConfig(AppConfig):
-    default_auto_field = 'django.db.models.BigAutoField'
-    name = 'FreteApp'
+    default_auto_field = "django.db.models.BigAutoField"
+    name = "FreteApp"
