@@ -1,20 +1,29 @@
-<div class="card">
-    <div class="card-body">
-        <form>
-            <div class="mb-3">
-                <label for="exampleInputEmail1" class="form-label">Email address</label>
-                <input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp">
-                <div id="emailHelp" class="form-text">We'll never share your email with anyone else.</div>
-            </div>
-            <div class="mb-3">
-                <label for="exampleInputPassword1" class="form-label">Password</label>
-                <input type="password" class="form-control" id="exampleInputPassword1">
-            </div>
-            <div class="mb-3 form-check">
-                <input type="checkbox" class="form-check-input" id="exampleCheck1">
-                <label class="form-check-label" for="exampleCheck1">Check me out</label>
-            </div>
-            <button type="submit" class="btn btn-primary">Submit</button>
-        </form>
+<form class="row g-3" action="/" method="post">
+    {% csrf_token %}
+    <div class="col-md-12">
+        <label for="cep" class="form-label">CEP</label>
+        <input type="int" max="9" class="form-control" id="cep" name="cep" placeholder="Digite seu CEP" aria-label="CEP"
+            aria-describedby="button-addon2">
     </div>
-</div>
+    <div class="col-md-3">
+        <label for="altura" class="form-label">Altura</label>
+        <input type="number" class="form-control" id="altura" name="altura" placeholder="Altura" value="2">
+    </div>
+    <div class="col-md-3">
+        <label for="largura" class="form-label">Largura</label>
+        <input type="number" class="form-control" id="largura" name="largura" placeholder="Largura" value="12">
+    </div>
+    <div class="col-md-3">
+        <label for="comprimento" class="form-label">Comprimento</label>
+        <input type="number" class="form-control" id="comprimento" name="comprimento" placeholder="Comprimento"
+            value="17">
+    </div>
+    <div class="col-md-3">
+        <label for="peso" class="form-label">Peso</label>
+        <input type="number" class="form-control" id="peso" name="peso" placeholder="Peso" min="0" max="30" value="2">
+    </div>
+    <div>
+        <button class="btn btn-outline-secondary btn-custom" type="submit" id="button-addon2">CONSULTAR</button>
+    </div>
+</form>
+
