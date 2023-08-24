@@ -1,29 +1,45 @@
-<form class="row g-3" action="/" method="post">
-    {% csrf_token %}
-    <div class="col-md-12">
-        <label for="cep" class="form-label">CEP</label>
-        <input type="int" max="9" class="form-control" id="cep" name="cep" placeholder="Digite seu CEP" aria-label="CEP"
-            aria-describedby="button-addon2">
-    </div>
-    <div class="col-md-3">
-        <label for="altura" class="form-label">Altura</label>
-        <input type="number" class="form-control" id="altura" name="altura" placeholder="Altura" value="2">
-    </div>
-    <div class="col-md-3">
-        <label for="largura" class="form-label">Largura</label>
-        <input type="number" class="form-control" id="largura" name="largura" placeholder="Largura" value="12">
-    </div>
-    <div class="col-md-3">
-        <label for="comprimento" class="form-label">Comprimento</label>
-        <input type="number" class="form-control" id="comprimento" name="comprimento" placeholder="Comprimento"
-            value="17">
-    </div>
-    <div class="col-md-3">
-        <label for="peso" class="form-label">Peso</label>
-        <input type="number" class="form-control" id="peso" name="peso" placeholder="Peso" min="0" max="30" value="2">
-    </div>
-    <div>
-        <button class="btn btn-outline-secondary btn-custom" type="submit" id="button-addon2">CONSULTAR</button>
-    </div>
-</form>
+<div>
+    <form class="row g-3" action="/" method="post">
+        {% csrf_token %}
+        <div class="col-md-12">
+            <label for="cep" class="form-label">CEP</label>
+            <input type="text" maxlength="9" class="form-control" id="cep" name="cep" placeholder="Digite seu CEP"
+                aria-label="CEP" aria-describedby="button-addon2" required>
+        </div>
+        <div class="col-md-3">
+            <label for="altura" class="form-label">Altura</label>
+            <input type="number" class="form-control" id="altura" name="altura" placeholder="Altura" value="2">
+        </div>
+        <div class="col-md-3">
+            <label for="largura" class="form-label">Largura</label>
+            <input type="number" class="form-control" id="largura" name="largura" placeholder="Largura" value="12">
+        </div>
+        <div class="col-md-3">
+            <label for="comprimento" class="form-label">Comprimento</label>
+            <input type="number" class="form-control" id="comprimento" name="comprimento" placeholder="Comprimento"
+                value="17">
+        </div>
+        <div class="col-md-3">
+            <label for="peso" class="form-label">Peso</label>
+            <input type="number" class="form-control" id="peso" name="peso" placeholder="Peso" min="0" max="30"
+                value="2">
+        </div>
+        <div>
+            <button class="btn btn-outline-secondary btn-custom" type="submit" id="button-addon2">CONSULTAR</button>
+        </div>
+    </form>
+    <script>
+        document.getElementById("cep").addEventListener("input", function () {
+            // Remove todos os caracteres não numéricos
+            const numericValue = this.value.replace(/\D/g, "");
 
+            // Insere o hífen na posição 5 (caso haja pelo menos 5 caracteres numéricos)
+            if (numericValue.length >= 5) {
+                const formattedValue = numericValue.slice(0, 5) + "-" + numericValue.slice(5);
+                this.value = formattedValue;
+            } else {
+                this.value = numericValue;
+            }
+        });
+    </script>
+</div>

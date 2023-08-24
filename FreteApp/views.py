@@ -32,7 +32,7 @@ def home(request):
                 request,
                 "FreteApp/cotacao.html",
                 context={"endereco": f"O cep informado é invalido ou não existe"},
-                status=401,
+                status=400,
             )
 
     return render(request, "FreteApp/cotacao.html", status=200)
