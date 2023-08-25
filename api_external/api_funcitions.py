@@ -30,19 +30,32 @@ def buscar_endereco(cep):
         return {"response_erro": ERRO_REQUISICAO_MSG.format(e)}
 
 
-import requests
-
-
-def consultar_valor_correio(cep):
-    url = "teste"
+def consultar_valor_correio(cep, peso):
+    chave = "07083e9b894d791c4a8191442cf4747b"
+    url_sgpweb = f"https://www.sgpweb.com.br/novo/api/consulta-precos-prazos?chave_integracao={chave}"
+    headers = {"Content-Type": "application/json"}
+    payload = {
+        "cep_origem": "30170-130",
+        "cep_destino": cep,
+        "peso": peso,
+        "comprimento": "",
+        "altura": "",
+        "largura": "",
+        "servicos": ["04162", "04669"],
+    }
     try:
         # Construir a URL ou payload para a consulta à API externa
         # Fazer a requisição usando requests.get() ou requests.post()
-
-        response = requests.get(url)  # Ou requests.post(payload)
+        response = requests.post(url_sgpweb, json=payload, headers=headers)
         response.raise_for_status()  # Lidar com erros HTTP
 
         data = response.json()
+
+        sedex_erro = data["servicos"]["04162"]["Erro"]
+        pac_erro = data["servicos"]["04669"]["Erro"]
+
+        if sedex_erro and pac_erro != "0":
+            return data["servicos"]["04669"]["MsgErro"]
 
         # Processar e retornar os dados obtidos da API
         return data

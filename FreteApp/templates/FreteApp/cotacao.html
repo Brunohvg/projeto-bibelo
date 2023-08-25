@@ -1,12 +1,11 @@
-{% extends "base.html" %}
+{% extends 'base.html' %}
+{# Este é um comentário em Jinja2. Ele não será renderizado no HTML final. #}
 
 {% block conteudo %}
 
-{% include 'form-consultar-valores.html' %}
+  {% include 'form-consultar-valores.html' %}
+  
+  {% include 'cards.html' %}
+{% endblock %}
 
 
-<div class="card-body" style="text-align: center;">{{ endereco }}</div>
-
-
-
-{% endblock conteudo %}

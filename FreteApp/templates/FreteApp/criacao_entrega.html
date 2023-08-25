@@ -1,28 +1,24 @@
-{% extends "base.html" %}
+{% extends 'base.html' %}
 
 {% block conteudo %}
-
-<table class="table">
+  <table class="table">
     <thead>
-        <tr>
-            <th scope="col">N° Pedido</th>
-            <th scope="col">Cliente</th>
-            <th scope="col">Endereço</th>
-            <th scope="col">Valor Boy</th>
-        </tr>
+      <tr>
+        <th scope="col">N° Pedido</th>
+        <th scope="col">Cliente</th>
+        <th scope="col">Endereço</th>
+        <th scope="col">Valor Boy</th>
+      </tr>
     </thead>
     <tbody>
-        {% for cliente_item in clientes %}
+      {% for cliente_item in clientes %}
         <tr>
-            <th scope="row">
-                {{ cliente_item.n_pedido }}</th>
-            <td>{{ cliente_item.nome }}</td>
-            <td>{{ cliente_item.telefone }}</td>
-            <td>R$ {{ cliente_item.valor_boy }}</td>
-
+          <th scope="row">{{ cliente_item.n_pedido }}</th>
+          <td>{{ cliente_item.nome }}</td>
+          <td>{{ cliente_item.telefone }}</td>
+          <td>R$ {{ cliente_item.valor_boy }}</td>
         </tr>
-        {% endfor %}
+      {% endfor %}
     </tbody>
-</table>
-
-{% endblock conteudo %}
+  </table>
+{% endblock %}

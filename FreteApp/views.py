@@ -1,38 +1,62 @@
 from django.shortcuts import render
-from api_external.api_funcitions import buscar_endereco
+from api_external.api_funcitions import buscar_endereco, consultar_valor_correio
 
 
 def home(request):
     if request.method == "POST":
-        cep = request.POST.get("cep")
-        if cep:
-            endereco = buscar_endereco(cep)
+        return handle_post_request(request)
+    else:
+        return render(request, "FreteApp/cotacao.html", status=200)
 
-            if endereco.get("cep"):
-                endereco_info = {
-                    "cep": endereco["cep"],
-                    "logradouro": endereco["logradouro"],
-                    "complemento": endereco["complemento"],
-                    "bairro": endereco["bairro"],
-                    "localidade": endereco["localidade"],
-                    "uf": endereco["uf"],
-                    "erro": "cep digitado errado",
-                }
-                return render(
-                    request,
-                    "FreteApp/cotacao.html",
-                    context={"endereco": endereco_info},
-                    status=200,
-                )
 
-            """
-            retornar erro caso o cep seja errado 
-            """
-            return render(
-                request,
-                "FreteApp/cotacao.html",
-                context={"endereco": f"O cep informado é invalido ou não existe"},
-                status=400,
-            )
+def handle_post_request(request):
+    cep = request.POST.get("cep")
+    peso = request.POST.get("peso")
 
-    return render(request, "FreteApp/cotacao.html", status=200)
+    if cep and peso:
+        return handle_valid_data(cep, peso, request)
+    else:
+        return handle_invalid_data(request)
+
+
+def handle_valid_data(cep, peso, request):
+    endereco = buscar_endereco(cep)
+    valores_correio = consultar_valor_correio(cep=cep, peso=peso)
+
+    if endereco.get("cep"):
+        endereco_info = {
+            "cep": endereco["cep"],
+            "logradouro": endereco["logradouro"],
+            "complemento": endereco["complemento"],
+            "bairro": endereco["bairro"],
+            "localidade": endereco["localidade"],
+            "uf": endereco["uf"],
+            "erro": "cep digitado errado",
+            "valor_sedex": valores_correio["servicos"]["04162"]["Valor"],
+            "valor_pac": valores_correio["servicos"]["04669"]["Valor"],
+        }
+
+        print()
+
+        return render(
+            request,
+            "FreteApp/cotacao.html",
+            context=endereco_info,
+            status=200,
+        )
+    else:
+        return render(
+            request,
+            "FreteApp/cotacao.html",
+            context={"endereco": "O cep informado é inválido ou não existe"},
+            status=400,
+        )
+
+
+def handle_invalid_data(request):
+    return render(
+        request,
+        "FreteApp/cotacao.html",
+        context={"endereco": "Dados inválidos fornecidos"},
+        status=400,
+    )
