@@ -1,8 +1,16 @@
 from django.shortcuts import render
-from api_external.api_funcitions import buscar_endereco, consultar_valor_correio
+from api_external.api_funcitions import (
+    buscar_endereco,
+    consultar_valor_correio,
+    consultar_valor_motoboy,
+)
 
 
 def home(request):
+    return render(request, "FreteApp/home.html")
+
+
+def cotacao(request):
     if request.method == "POST":
         return handle_post_request(request)
     else:
@@ -22,6 +30,7 @@ def handle_post_request(request):
 def handle_valid_data(cep, peso, request):
     endereco = buscar_endereco(cep)
     valores_correio = consultar_valor_correio(cep=cep, peso=peso)
+    valor_motoboy = consultar_valor_motoboy(cep=cep)
 
     if endereco.get("cep"):
         endereco_info = {
@@ -34,9 +43,10 @@ def handle_valid_data(cep, peso, request):
             "erro": "cep digitado errado",
             "valor_sedex": valores_correio["servicos"]["04162"]["Valor"],
             "valor_pac": valores_correio["servicos"]["04669"]["Valor"],
+            "tempo_sedex": valores_correio["servicos"]["04162"]["PrazoEntrega"],
+            "tempo_pac": valores_correio["servicos"]["04669"]["PrazoEntrega"],
+            "valor_boy": valor_motoboy,
         }
-
-        print()
 
         return render(
             request,

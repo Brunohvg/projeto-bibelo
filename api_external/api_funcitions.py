@@ -1,4 +1,13 @@
 import requests
+from decouple import config
+
+"""
+07083e9b894d791c4a8191442cf4747b
+B515296DB6444A61C4A4B5CDCEF1846A3FF58D2D
+"""
+
+api_key = config("KEY_CORREIO")
+api_borzo = config("TOKEN_BORZO")
 
 
 def buscar_endereco(cep):
@@ -31,8 +40,7 @@ def buscar_endereco(cep):
 
 
 def consultar_valor_correio(cep, peso):
-    chave = "07083e9b894d791c4a8191442cf4747b"
-    url_sgpweb = f"https://www.sgpweb.com.br/novo/api/consulta-precos-prazos?chave_integracao={chave}"
+    url_sgpweb = f"https://www.sgpweb.com.br/novo/api/consulta-precos-prazos?chave_integracao={api_key}"
     headers = {"Content-Type": "application/json"}
     payload = {
         "cep_origem": "30170-130",
@@ -65,3 +73,40 @@ def consultar_valor_correio(cep, peso):
         # Pode retornar uma mensagem de erro, logar o erro, etc.
         print("Erro na requisição:", e)
         return {"erro": "Ocorreu um erro na consulta à API externa."}
+
+
+def consultar_valor_motoboy(cep):
+    url_borzo = (
+        "https://robotapitest-br.borzodelivery.com/api/business/1.4/calculate-order"
+    )
+    header = {
+        "X-DV-Auth-Token": api_borzo,
+        "Content-Type": "application/json",
+    }
+    data = {
+        "matter": "Documents",
+        "points": [{"address": "30170-130"}, {"address": cep}],
+    }
+
+    try:
+        response = requests.post(url_borzo, headers=header, json=data)
+        response.raise_for_status()  # Lidar com erros HTTP
+        response = response.json()
+
+        valor_boy = int(float(response["order"]["payment_amount"]))
+
+        if valor_boy <= 18:
+            valor = "18,00"
+            return valor
+
+        else:
+            return response["order"]["payment_amount"]
+
+    except requests.exceptions.RequestException as e:
+        # Lidar com erros de requisição, como timeouts, conexão falha, etc.
+        # Pode retornar uma mensagem de erro, logar o erro, etc.
+        print("Erro na requisição:", e)
+        return {"erro": "Ocorreu um erro na consulta à API externa."}
+
+
+print(consultar_valor_motoboy(54))

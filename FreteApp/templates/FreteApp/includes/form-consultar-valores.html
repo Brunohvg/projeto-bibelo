@@ -1,5 +1,5 @@
 <div>
-    <form class="row g-3" action="/" method="post">
+    <form class="row g-3" action="" method="post">
         {% csrf_token %}
         <div class="col-md-12">
             <label for="cep" class="form-label">CEP</label>
@@ -22,21 +22,22 @@
         <div class="col-md-3">
             <label for="peso" class="form-label">Peso</label>
             <input type="number" class="form-control" id="peso" name="peso" placeholder="Peso" min="0" max="30"
-            value="2" required>
+                value="2" required>
         </div>
         <div>
             <button class="btn btn-outline-secondary btn-custom" type="submit" id="button-addon2">CONSULTAR</button>
         </div>
     </form>
     <br>
+
     {% if localidade %}
     <div class="card-header">
+        
         <div class="text-center custom-texto-valor">
             <h6>
                 <p class="custom-texto-valor">Endereço para entrega</p>
                 <p class="custom-texto-valor">{{logradouro}}, {{bairro}} - {{localidade}} - {{uf}} - {{cep}}</p>
-                {{ valor_sedex }}
-            </h6>   
+            </h6>
         </div>
     </div>
 
@@ -45,7 +46,7 @@
         <div class="text-center custom-texto-valor">
             <h6>
                 <p class="custom-texto-valor">{{ endereco }}</p>
-                
+
             </h6>
         </div>
     </div>
