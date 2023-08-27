@@ -1,10 +1,6 @@
 import requests
 from decouple import config
 
-"""
-07083e9b894d791c4a8191442cf4747b
-B515296DB6444A61C4A4B5CDCEF1846A3FF58D2D
-"""
 
 api_key = config("KEY_CORREIO")
 api_borzo = config("TOKEN_BORZO")
@@ -107,6 +103,3 @@ def consultar_valor_motoboy(cep):
         # Pode retornar uma mensagem de erro, logar o erro, etc.
         print("Erro na requisição:", e)
         return {"erro": "Ocorreu um erro na consulta à API externa."}
-
-
-print(consultar_valor_motoboy(54))
