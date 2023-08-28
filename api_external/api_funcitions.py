@@ -103,3 +103,4 @@ def consultar_valor_motoboy(cep):
         # Pode retornar uma mensagem de erro, logar o erro, etc.
         print("Erro na requisição:", e)
         return {"erro": "Ocorreu um erro na consulta à API externa."}
+

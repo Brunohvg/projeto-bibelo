@@ -4,6 +4,7 @@ from api_external.api_funcitions import (
     consultar_valor_correio,
     consultar_valor_motoboy,
 )
+from .form import FormularioEndereco, FormularioEntrega
 
 
 def home(request):
@@ -31,7 +32,8 @@ def handle_valid_data(cep, peso, request):
     endereco = buscar_endereco(cep)
     valores_correio = consultar_valor_correio(cep=cep, peso=peso)
     valor_motoboy = consultar_valor_motoboy(cep=cep)
-
+    formulario_endereco = FormularioEndereco()
+    formulario_entrega = FormularioEntrega()
     if endereco.get("cep"):
         endereco_info = {
             "cep": endereco["cep"],
@@ -46,6 +48,8 @@ def handle_valid_data(cep, peso, request):
             "tempo_sedex": valores_correio["servicos"]["04162"]["PrazoEntrega"],
             "tempo_pac": valores_correio["servicos"]["04669"]["PrazoEntrega"],
             "valor_boy": valor_motoboy,
+            "formulario_endereco": formulario_endereco,
+            "formulario_entrega": formulario_entrega,
         }
 
         return render(
