@@ -1,0 +1,56 @@
+:root {
+    --cor-sedex: #e9be00;
+    --cor-pac: #003f6b;
+    --cor-motoboy: #0db67f;
+}
+
+.custom-card-header {
+    background-color: var(--cor-sedex);
+    color: white;
+    font-weight: bold;
+}
+
+.custom-card-header-pac {
+    background-color: var(--cor-pac);
+    color: white;
+    font-weight: bold;
+}
+
+.custom-card-header-motoboy {
+    background-color: var(--cor-motoboy);
+    color: aliceblue;
+    font-weight: bold;
+}
+
+.custom-card-body-r {
+    min-height: 245px;
+    display: block;
+}
+
+.custom-texto-valor {
+    font-size: 16px;
+    font-weight: bold;
+    color: #586d8c;
+}
+
+.custom-btn-texto {
+    font-size: 16px;
+    font-weight: bold;
+    color: white;
+}
+
+.btn-custom {
+    width: 35%;
+    margin: 0 auto;
+    display: block;
+}
+
+.custom-btn-modala {
+    background-color: #0db67f;
+    border-color: #0db67f;
+}
+
+.custom-btn-modala:hover:only-child {
+    background-color: hsl(160, 100%, 29%);
+    border-color: hsl(160, 100%, 29%);
+}
