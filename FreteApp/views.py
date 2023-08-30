@@ -1,10 +1,12 @@
 from django.shortcuts import render
+from django.contrib import messages
+from .form import FormularioEndereco, FormularioEntrega
 from api_external.api_funcitions import (
     buscar_endereco,
     consultar_valor_correio,
     consultar_valor_motoboy,
 )
-from .form import FormularioEndereco, FormularioEntrega
+
 
 
 def home(request):
@@ -32,7 +34,7 @@ def handle_valid_data(cep, peso, request):
     endereco = buscar_endereco(cep)
     valores_correio = consultar_valor_correio(cep=cep, peso=peso)
     valor_motoboy = consultar_valor_motoboy(cep=cep)
-    formulario_endereco = FormularioEndereco()
+    formulario_endereco = FormularioEndereco(initial={'rua':'testes'})
     formulario_entrega = FormularioEntrega()
     if endereco.get("cep"):
         endereco_info = {
@@ -57,6 +59,7 @@ def handle_valid_data(cep, peso, request):
             "FreteApp/cotacao.html",
             context=endereco_info,
             status=200,
+
         )
     else:
         return render(
