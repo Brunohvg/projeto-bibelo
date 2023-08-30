@@ -8,7 +8,19 @@ from api_external.api_funcitions import (
 )
 
 
+def handle_formulario_post(request):
+    nome = request.POST.get('nome_cliente')
+    context = {
+        'nome': nome,
+    }
+    print(nome)
+    return render(request, "FreteApp/home.html", context=context)
+
+
 def home(request):
+    if request.method == 'POST':
+        return handle_formulario_post(request)
+
     return render(request, "FreteApp/home.html")
 
 
