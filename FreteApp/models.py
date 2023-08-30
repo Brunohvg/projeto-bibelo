@@ -18,7 +18,7 @@ entrega = Entrega.objects.create(
     info_adicional="Deixar na portaria",
     endereco=endereco,
 )"""
- 
+
 
 # Create your models here.
 

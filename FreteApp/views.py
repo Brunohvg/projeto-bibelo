@@ -8,7 +8,6 @@ from api_external.api_funcitions import (
 )
 
 
-
 def home(request):
     return render(request, "FreteApp/home.html")
 
@@ -32,10 +31,17 @@ def handle_post_request(request):
 
 def handle_valid_data(cep, peso, request):
     endereco = buscar_endereco(cep)
+    if endereco:
+        conteudo_inicial = {
+            "rua": endereco["logradouro"],
+            "bairro": endereco["bairro"],
+            "cidade": endereco["localidade"],
+            "cep": endereco["cep"],
+        }
     valores_correio = consultar_valor_correio(cep=cep, peso=peso)
     valor_motoboy = consultar_valor_motoboy(cep=cep)
-    formulario_endereco = FormularioEndereco(initial={'rua':'testes'})
-    formulario_entrega = FormularioEntrega()
+    formulario_endereco = FormularioEndereco(initial=conteudo_inicial)
+    formulario_entrega = FormularioEntrega(initial={'hora_limite':'12:00','valor_entrega':valor_motoboy})
     if endereco.get("cep"):
         endereco_info = {
             "cep": endereco["cep"],

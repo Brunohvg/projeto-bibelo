@@ -1,21 +1,25 @@
-{% if formulario_endereco %}
-    {% load crispy_forms_tags %}
-    <form class="row g-2" action="." method="post">
-        {% csrf_token %}
-        <div class="col-md-10">
-            {{ formulario_endereco.rua|as_crispy_field }}
-        </div>
-        <div class="col-md-2">
-            {{ formulario_endereco.numero_casa|as_crispy_field }}
-        </div>
-        <div class="col-md-6">
-            {{ formulario_endereco.cidade|as_crispy_field }}
-        </div>
-        <div class="col-md-6">
-            {{ formulario_endereco.bairro|as_crispy_field }}
-        </div>
-        <div class="col-md-6">
-            {{ formulario_endereco.cep|as_crispy_field }}
-        </div>
-    </form>
+{% if formulario_entrega %}
+{% load crispy_forms_tags %}
+<form class="row g-2" action="." method="post">
+    {% csrf_token %}
+    <div class="col-md-8">
+        {{ formulario_entrega.nome_cliente|as_crispy_field }}
+    </div>
+    <div class="col-md-4">
+        {{ formulario_entrega.telefone|as_crispy_field }}
+    </div>
+    <div class="col-md-4">
+        {{ formulario_entrega.valor_entrega|as_crispy_field }}
+    </div>
+    <div class="col-md-4">
+        {{ formulario_entrega.hora_limite|as_crispy_field }}
+    </div>
+    <div class="col-md-4">
+        {{ formulario_entrega.numero_pedido|as_crispy_field }}
+    </div>
+    <div class="col-md-12">
+        {{ formulario_entrega.info_adicional|as_crispy_field }}
+    </div>
+
+</form>
 {% endif %}
