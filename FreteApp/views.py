@@ -41,7 +41,8 @@ def handle_valid_data(cep, peso, request):
     valores_correio = consultar_valor_correio(cep=cep, peso=peso)
     valor_motoboy = consultar_valor_motoboy(cep=cep)
     formulario_endereco = FormularioEndereco(initial=conteudo_inicial)
-    formulario_entrega = FormularioEntrega(initial={'hora_limite':'12:00','valor_entrega':valor_motoboy})
+    formulario_entrega = FormularioEntrega(
+        initial={'hora_limite': '12:00', 'valor_entrega': valor_motoboy})
     if endereco.get("cep"):
         endereco_info = {
             "cep": endereco["cep"],

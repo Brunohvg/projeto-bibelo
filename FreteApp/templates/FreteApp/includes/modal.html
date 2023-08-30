@@ -1,38 +1,24 @@
-<div class="modal fade" id="exampleModalToggle" aria-hidden="true" aria-labelledby="exampleModalToggleLabel"
-    tabindex="-1">
-    <div class="modal-dialog modal-dialog-centered">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalToggleLabel">Dados do Endereço</h5>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-            </div>
-            <div class="modal-body">
-                {% include 'FreteApp/includes/form-dados-endereco.html' %}
-            </div>
-            <div class="modal-footer">
-                <button class="btn btn-primary" data-bs-target="#exampleModalToggle2" data-bs-toggle="modal"
-                    data-bs-dismiss="modal">Dados Cliente</button>
-            </div>
+<!-- Modal -->
+<form class="row g-2" action="{% url 'home' %}" method="post">
+  {% csrf_token %}
+  <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLabel">Cadastro de entregas</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
         </div>
-    </div>
-</div>
-<div class="modal fade" id="exampleModalToggle2" aria-hidden="true" aria-labelledby="exampleModalToggleLabel2"
-    tabindex="-1">
-    <div class="modal-dialog modal-dialog-centered">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalToggleLabel2">Dados Clientes</h5>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-            </div>
-            <div class="modal-body">
-                {% include 'FreteApp/includes/form-dados-cliente.html' %}
-            </div>
-            <div class="modal-footer">
-                
-                <button class="btn btn-primary" data-bs-target="#exampleModalToggle" data-bs-toggle="modal"
-                    data-bs-dismiss="modal">Dados Endereço</button>
-                    <button class="btn btn-primary" type="submit">Salvar</button>
-            </div>
+        <div class="modal-body row g-2">
+          <h5 class="modal-title" id="exampleModalLabel">Dados do endereço</h5>
+          {% include 'FreteApp/includes/form-dados-endereco.html' %}
+          <h5 class="modal-title" id="exampleModalLabel">Dados do cliente</h5>
+          {% include 'FreteApp/includes/form-dados-cliente.html' %}
         </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary btn" data-bs-dismiss="modal">Fechar</button>
+          <button type="submit" class="btn btn-primary custom-btn-modala">Salvar</button>
+        </div>
+      </div>
     </div>
-</div>
+  </div>
+</form>

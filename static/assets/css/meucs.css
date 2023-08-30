@@ -2,7 +2,9 @@
     --cor-sedex: #e9be00;
     --cor-pac: #003f6b;
     --cor-motoboy: #0db67f;
+    --cor-btn-fechar: #8d0b0b;
 }
+
 
 .custom-card-header {
     background-color: var(--cor-sedex);

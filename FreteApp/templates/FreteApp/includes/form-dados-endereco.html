@@ -1,7 +1,6 @@
 {% if formulario_endereco %}
 {% load crispy_forms_tags %}
-<form class="row g-2" action="." method="post">
-    {% csrf_token %}
+
     <div class="col-md-10">
         {{ formulario_endereco.rua|as_crispy_field }}
     </div>
@@ -20,5 +19,5 @@
     <div class="col-md-8">
         {{ formulario_endereco.complemento|as_crispy_field }}
     </div>
-</form>
+
 {% endif %}
