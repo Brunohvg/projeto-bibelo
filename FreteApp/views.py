@@ -11,7 +11,7 @@ from api_external.api_funcitions import (
 
 
 def handle_formulario_post(request):
-
+    hora_limite_str = request.POST.get('hora_limite')
     endereco = Endereco.objects.create(
         rua=request.POST.get('rua'),
         numero_casa=request.POST.get('numero_casa'),
@@ -24,17 +24,14 @@ def handle_formulario_post(request):
         nome_cliente=request.POST.get('nome_cliente'),
         telefone=request.POST.get('telefone'),
         numero_pedido=request.POST.get('numero_pedido'),
-        hora_limite=datetime.datetime.now(),
+        criado=datetime.datetime.now(),
+        hora_limite=hora_limite_str,
         info_adicional=request.POST.get('info_adicional'),
         endereco=endereco,)
 
-    context = {
-        'nome': entrega,
-    
 
-    }
 
-    return render(request, "FreteApp/home.html", context=context)
+    return render(request, "FreteApp/home.html")
 
 
 def home(request):

@@ -45,9 +45,13 @@ class Entrega(models.Model):
     numero_pedido = models.CharField(
         max_length=25, verbose_name="Nº Pedido", null=True, blank=True
     )
-    hora_limite = models.DateTimeField(
-        verbose_name="Horário Limite", null=True, blank=True
+    criado = models.DateTimeField(
+        verbose_name="Entrega Criada", null=True, blank=True
     )
+    hora_limite = models.TimeField(
+        verbose_name="Entregar até", null=True, blank=True
+    )
+    
     info_adicional = models.TextField(
         verbose_name="Informações adicionais", null=True, blank=True
     )
