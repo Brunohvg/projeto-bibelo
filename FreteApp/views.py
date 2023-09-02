@@ -1,6 +1,8 @@
 import datetime
 from django.shortcuts import render
 from .models import Endereco, Entrega
+from django.utils import timezone
+
 from django.contrib import messages
 from .forms import FormularioEndereco, FormularioEntrega
 from api_external.api_funcitions import (
@@ -24,7 +26,7 @@ def handle_formulario_post(request):
         nome_cliente=request.POST.get('nome_cliente'),
         telefone=request.POST.get('telefone'),
         numero_pedido=request.POST.get('numero_pedido'),
-        criado=datetime.datetime.now(),
+        criado=timezone.now(),
         hora_limite=hora_limite_str,
         info_adicional=request.POST.get('info_adicional'),
         endereco=endereco,)
