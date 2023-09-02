@@ -1,6 +1,8 @@
+import datetime
 from django.shortcuts import render
+from .models import Endereco, Entrega
 from django.contrib import messages
-from .form import FormularioEndereco, FormularioEntrega
+from .forms import FormularioEndereco, FormularioEntrega
 from api_external.api_funcitions import (
     buscar_endereco,
     consultar_valor_correio,
@@ -9,11 +11,29 @@ from api_external.api_funcitions import (
 
 
 def handle_formulario_post(request):
-    nome = request.POST.get('nome_cliente')
+
+    endereco = Endereco.objects.create(
+        rua=request.POST.get('rua'),
+        numero_casa=request.POST.get('numero_casa'),
+        complemento=request.POST.get('complemento'),
+        bairro=request.POST.get('bairro'),
+        cidade=request.POST.get('cidade'),
+        cep=request.POST.get('cep'),)
+
+    entrega = Entrega.objects.create(
+        nome_cliente=request.POST.get('nome_cliente'),
+        telefone=request.POST.get('telefone'),
+        numero_pedido=request.POST.get('numero_pedido'),
+        hora_limite=datetime.datetime.now(),
+        info_adicional=request.POST.get('info_adicional'),
+        endereco=endereco,)
+
     context = {
-        'nome': nome,
+        'nome': entrega,
+    
+
     }
-    print(nome)
+
     return render(request, "FreteApp/home.html", context=context)
 
 
