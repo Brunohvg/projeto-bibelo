@@ -1,9 +1,8 @@
-import datetime
 from django.shortcuts import render
 from .models import Endereco, Entrega
 from django.utils import timezone
-
 from django.contrib import messages
+from .models import Endereco, Entrega
 from .forms import FormularioEndereco, FormularioEntrega
 from api_external.api_funcitions import (
     buscar_endereco,
@@ -29,18 +28,29 @@ def handle_formulario_post(request):
         criado=timezone.now(),
         hora_limite=hora_limite_str,
         info_adicional=request.POST.get('info_adicional'),
-        endereco=endereco,)
+        endereco=endereco,
+        valor_entrega=request.POST.get('valor_entrega')),
+        
+    
+    messages.success(request, 'Entrega criada com sucesso')
 
+    todas_entregas = Entrega.objects.all()
+    t_entregas = {
+        'todas_entregas':todas_entregas,
+    }
 
-
-    return render(request, "FreteApp/home.html")
+    return render(request, "FreteApp/home.html", context=t_entregas)
 
 
 def home(request):
+    todas_entregas = Entrega.objects.all()
+    t_entregas = {
+        'todas_entregas':todas_entregas,
+    }
     if request.method == 'POST':
         return handle_formulario_post(request)
 
-    return render(request, "FreteApp/home.html")
+    return render(request, "FreteApp/home.html", context=t_entregas)
 
 
 def cotacao(request):
