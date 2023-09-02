@@ -1,27 +1,5 @@
 from django.db import models
 
-# validators=[validate_phone_number]
-"""endereco = Endereco.objects.create(
-    rua="Rua A",
-    numero_casa="123",
-    complemento="Apto 101",
-    bairro="Bairro X",
-    cidade="Cidade Y",
-    cep="12345-678",
-)
-
-entrega = Entrega.objects.create(
-    nome_cliente="Fulano de Tal",
-    telefone="(31) 99999-9999",
-    numero_pedido="12345",
-    hora_limite=datetime.datetime.now(),
-    info_adicional="Deixar na portaria",
-    endereco=endereco,
-)"""
-
-
-# Create your models here.
-
 
 class Endereco(models.Model):
     rua = models.CharField(max_length=255, verbose_name="Rua")
@@ -41,17 +19,13 @@ class Endereco(models.Model):
 
 class Entrega(models.Model):
     nome_cliente = models.CharField(max_length=255, verbose_name="Nome")
-    telefone = models.CharField(max_length=11, verbose_name="Telefone")
+    telefone = models.CharField(max_length=15, verbose_name="Telefone")
     numero_pedido = models.CharField(
         max_length=25, verbose_name="Nº Pedido", null=True, blank=True
     )
-    criado = models.DateTimeField(
-        verbose_name="Entrega Criada", null=True, blank=True
-    )
-    hora_limite = models.TimeField(
-        verbose_name="Entregar até", null=True, blank=True
-    )
-    
+    criado = models.DateTimeField(verbose_name="Entrega Criada", null=True, blank=True)
+    hora_limite = models.TimeField(verbose_name="Entregar até", null=True, blank=True)
+
     info_adicional = models.TextField(
         verbose_name="Informações adicionais", null=True, blank=True
     )

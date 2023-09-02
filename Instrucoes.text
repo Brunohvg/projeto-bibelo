@@ -1,0 +1,28 @@
+# validators=[validate_phone_number]
+"""endereco = Endereco.objects.create(
+    rua="Rua A",
+    numero_casa="123",
+    complemento="Apto 101",
+    bairro="Bairro X",
+    cidade="Cidade Y",
+    cep="12345-678",
+)
+
+entrega = Entrega.objects.create(
+    nome_cliente="Fulano de Tal",
+    telefone="(31) 99999-9999",
+    numero_pedido="12345",
+    hora_limite=datetime.datetime.now(),
+    info_adicional="Deixar na portaria",
+    endereco=endereco,
+)"""
+
+
+# Create your models here.
+
+forms
+
+"""    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        for filed in self.fields:
+            self.fields[filed].widget.attrs.update({"class": "form-control"})"""
