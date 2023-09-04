@@ -11,49 +11,9 @@ from api_external.api_funcitions import (
 )
 
 
-def handle_formulario_post(request):
-    hora_limite_str = request.POST.get("hora_limite")
-    endereco = Endereco.objects.create(
-        rua=request.POST.get("rua"),
-        numero_casa=request.POST.get("numero_casa"),
-        complemento=request.POST.get("complemento"),
-        bairro=request.POST.get("bairro"),
-        cidade=request.POST.get("cidade"),
-        cep=request.POST.get("cep"),
-    )
-
-    entrega = (
-        Entrega.objects.create(
-            nome_cliente=request.POST.get("nome_cliente"),
-            telefone=request.POST.get("telefone"),
-            numero_pedido=request.POST.get("numero_pedido"),
-            criado=timezone.now(),
-            hora_limite=hora_limite_str,
-            info_adicional=request.POST.get("info_adicional"),
-            endereco=endereco,
-            valor_entrega=request.POST.get("valor_entrega"),
-        ),
-    )
-
-    messages.success(request, "Entrega criada com sucesso")
-
-    todas_entregas = Entrega.objects.all()
-    t_entregas = {
-        "todas_entregas": todas_entregas,
-    }
-
-    return render(request, "FreteApp/home.html", context=t_entregas)
-
-
 def home(request):
-    todas_entregas = Entrega.objects.all()
-    t_entregas = {
-        "todas_entregas": todas_entregas,
-    }
-    if request.method == "POST":
-        return handle_formulario_post(request)
 
-    return render(request, "FreteApp/home.html", context=t_entregas)
+    return render(request, "FreteApp/home.html")
 
 
 def cotacao(request):
@@ -136,3 +96,48 @@ def handle_invalid_data(request):
         context={"endereco": "Dados inválidos fornecidos"},
         status=400,
     )
+
+
+def handle_formulario_cotacao(request):
+    hora_limite_str = request.POST.get("hora_limite")
+    endereco = Endereco.objects.create(
+        rua=request.POST.get("rua"),
+        numero_casa=request.POST.get("numero_casa"),
+        complemento=request.POST.get("complemento"),
+        bairro=request.POST.get("bairro"),
+        cidade=request.POST.get("cidade"),
+        cep=request.POST.get("cep"),
+    )
+
+    entrega = (
+        Entrega.objects.create(
+            nome_cliente=request.POST.get("nome_cliente"),
+            telefone=request.POST.get("telefone"),
+            numero_pedido=request.POST.get("numero_pedido"),
+            criado=timezone.now(),
+            hora_limite=hora_limite_str,
+            info_adicional=request.POST.get("info_adicional"),
+            endereco=endereco,
+            valor_entrega=request.POST.get("valor_entrega"),
+        ),
+    )
+
+    messages.success(request, "Entrega criada com sucesso")
+
+    todas_entregas = Entrega.objects.all()
+    t_entregas = {
+        "todas_entregas": todas_entregas,
+    }
+
+    return render(request, "FreteApp/listar_cotacoes.html", context=t_entregas)
+
+
+def listar_cotacoes(request):
+    todas_entregas = Entrega.objects.all()
+    t_entregas = {
+        "todas_entregas": todas_entregas,
+    }
+    if request.method == "POST":
+        return handle_formulario_cotacao(request)
+
+    return render(request, "FreteApp/listar_cotacoes.html", context=t_entregas)
