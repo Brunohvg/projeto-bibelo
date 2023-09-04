@@ -5,13 +5,12 @@
     <table class="table">
         <thead>
             <tr>
-                <th scope="col">N° Pedido</th>
+                <th scope="col">N°</th>
                 <th scope="col">Cliente</th>
                 <th scope="col">Endereço</th>
                 <th scope="col">Valor</th>
                 <th scope="col">Bairro</th>
                 <th scope="col">Ações</th>
-                <th scope="col">Imprimir</th>
             </tr>
         </thead>
         <tbody>
@@ -24,11 +23,6 @@
                 <td>{{ cliente_item.endereco }}</td>
                 <td>
                     <a href="/" class="btn btn-primary">Editar</a>
-                </td>
-                <td>
-                    <a href="/" class="btn btn-success">
-                        <i class="fas fa-print"></i> Imprimir
-                    </a>
                 </td>
             </tr>
             {% endfor %}

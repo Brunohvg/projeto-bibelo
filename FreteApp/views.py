@@ -16,7 +16,7 @@ def home(request):
     return render(request, "FreteApp/home.html")
 
 
-def cotacao(request):
+def cotar(request):
     if request.method == "POST":
         return handle_post_request(request)
     else:
@@ -141,3 +141,7 @@ def listar_cotacoes(request):
         return handle_formulario_cotacao(request)
 
     return render(request, "FreteApp/listar_cotacoes.html", context=t_entregas)
+
+
+def cotacao(request, id):
+    pass
