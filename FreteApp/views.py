@@ -12,31 +12,34 @@ from api_external.api_funcitions import (
 
 
 def handle_formulario_post(request):
-    hora_limite_str = request.POST.get('hora_limite')
+    hora_limite_str = request.POST.get("hora_limite")
     endereco = Endereco.objects.create(
-        rua=request.POST.get('rua'),
-        numero_casa=request.POST.get('numero_casa'),
-        complemento=request.POST.get('complemento'),
-        bairro=request.POST.get('bairro'),
-        cidade=request.POST.get('cidade'),
-        cep=request.POST.get('cep'),)
+        rua=request.POST.get("rua"),
+        numero_casa=request.POST.get("numero_casa"),
+        complemento=request.POST.get("complemento"),
+        bairro=request.POST.get("bairro"),
+        cidade=request.POST.get("cidade"),
+        cep=request.POST.get("cep"),
+    )
 
-    entrega = Entrega.objects.create(
-        nome_cliente=request.POST.get('nome_cliente'),
-        telefone=request.POST.get('telefone'),
-        numero_pedido=request.POST.get('numero_pedido'),
-        criado=timezone.now(),
-        hora_limite=hora_limite_str,
-        info_adicional=request.POST.get('info_adicional'),
-        endereco=endereco,
-        valor_entrega=request.POST.get('valor_entrega')),
-        
-    
-    messages.success(request, 'Entrega criada com sucesso')
+    entrega = (
+        Entrega.objects.create(
+            nome_cliente=request.POST.get("nome_cliente"),
+            telefone=request.POST.get("telefone"),
+            numero_pedido=request.POST.get("numero_pedido"),
+            criado=timezone.now(),
+            hora_limite=hora_limite_str,
+            info_adicional=request.POST.get("info_adicional"),
+            endereco=endereco,
+            valor_entrega=request.POST.get("valor_entrega"),
+        ),
+    )
+
+    messages.success(request, "Entrega criada com sucesso")
 
     todas_entregas = Entrega.objects.all()
     t_entregas = {
-        'todas_entregas':todas_entregas,
+        "todas_entregas": todas_entregas,
     }
 
     return render(request, "FreteApp/home.html", context=t_entregas)
@@ -45,9 +48,9 @@ def handle_formulario_post(request):
 def home(request):
     todas_entregas = Entrega.objects.all()
     t_entregas = {
-        'todas_entregas':todas_entregas,
+        "todas_entregas": todas_entregas,
     }
-    if request.method == 'POST':
+    if request.method == "POST":
         return handle_formulario_post(request)
 
     return render(request, "FreteApp/home.html", context=t_entregas)
@@ -71,7 +74,15 @@ def handle_post_request(request):
 
 
 def handle_valid_data(cep, peso, request):
-    endereco = buscar_endereco(cep)
+    try:
+        endereco = buscar_endereco(cep)
+        if endereco["logradouro"]:
+            endereco = buscar_endereco(cep)
+    except:
+        messages.error(
+            request, "Erro ao processar o cep ou cep invalido favor tentar novamente"
+        )
+        return render(request, "FreteApp/cotacao.html", status=401)
     if endereco:
         conteudo_inicial = {
             "rua": endereco["logradouro"],
@@ -83,7 +94,8 @@ def handle_valid_data(cep, peso, request):
     valor_motoboy = consultar_valor_motoboy(cep=cep)
     formulario_endereco = FormularioEndereco(initial=conteudo_inicial)
     formulario_entrega = FormularioEntrega(
-        initial={'hora_limite': '12:00', 'valor_entrega': valor_motoboy})
+        initial={"hora_limite": "12:00", "valor_entrega": valor_motoboy}
+    )
     if endereco.get("cep"):
         endereco_info = {
             "cep": endereco["cep"],
@@ -107,7 +119,6 @@ def handle_valid_data(cep, peso, request):
             "FreteApp/cotacao.html",
             context=endereco_info,
             status=200,
-
         )
     else:
         return render(

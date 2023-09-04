@@ -4,10 +4,25 @@
 
 {% block conteudo %}
 
+
 {% include 'FreteApp/includes/form-consultar-valores.html' %}
 
 {% include 'FreteApp/includes/cards.html' %}
 
 {% include 'FreteApp/includes/modal.html' %}
+
+
+{% for mensagem in messages %}
+
+<div style="text-align:center;">
+    <div class="alert alert-danger" id=".message">
+        <strong>{{mensagem}}</strong>
+    </div>
+</div>
+
+
+{% endfor %}
+
+
 
 {% endblock %}
