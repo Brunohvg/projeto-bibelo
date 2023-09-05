@@ -7,10 +7,9 @@
             <tr>
                 <th scope="col">N°</th>
                 <th scope="col">Cliente</th>
-                <th scope="col">Endereço</th>
                 <th scope="col">Valor</th>
                 <th scope="col">Bairro</th>
-                <th scope="col">Ações</th>
+                <th scope="col">Ver</th>
             </tr>
         </thead>
         <tbody>
@@ -18,11 +17,10 @@
             <tr>
                 <th scope="row">{{ cliente_item.numero_pedido }}</th>
                 <td>{{ cliente_item.nome_cliente }}</td>
-                <td>{{ cliente_item.telefone }}</td>
                 <td>R$ {{ cliente_item.valor_entrega }}</td>
                 <td>{{ cliente_item.endereco }}</td>
-                <td>
-                    <a href="{% url 'cotacao' cliente_item.identificador %}" class="btn btn-primary">Editar</a>
+                <td>{# enviar os dados na url usando o paht #}
+                    <a href="{% url 'cotacao' cliente_item.identificador %}" class="btn btn-primary">Ver</a>
                 </td>
             </tr>
             {% endfor %}

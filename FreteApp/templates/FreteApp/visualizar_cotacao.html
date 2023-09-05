@@ -1,0 +1,13 @@
+{% extends "base.html" %}
+
+{% block conteudo %}
+
+<div>{{entrega}}</div>
+<div>{{entrega}} </div>
+
+<a href="{% url 'gerar_os' entrega.identificador %}">teste</a>
+
+
+
+
+{% endblock conteudo %}
