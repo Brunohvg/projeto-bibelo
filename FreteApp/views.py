@@ -1,5 +1,6 @@
-from django.shortcuts import render
+from django.shortcuts import render, get_object_or_404
 from .models import Endereco, Entrega
+from django.http import HttpResponse
 from django.utils import timezone
 from django.contrib import messages
 from .models import Endereco, Entrega
@@ -12,7 +13,6 @@ from api_external.api_funcitions import (
 
 
 def home(request):
-
     return render(request, "FreteApp/home.html")
 
 
@@ -143,5 +143,6 @@ def listar_cotacoes(request):
     return render(request, "FreteApp/listar_cotacoes.html", context=t_entregas)
 
 
-def cotacao(request, id):
-    pass
+def cotacao(request, identificador):
+    entrega = get_object_or_404(Entrega, identificador=identificador)
+    return HttpResponse(entrega)

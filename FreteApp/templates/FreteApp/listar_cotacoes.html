@@ -22,7 +22,7 @@
                 <td>R$ {{ cliente_item.valor_entrega }}</td>
                 <td>{{ cliente_item.endereco }}</td>
                 <td>
-                    <a href="/" class="btn btn-primary">Editar</a>
+                    <a href="{% url 'cotacao' cliente_item.identificador %}" class="btn btn-primary">Editar</a>
                 </td>
             </tr>
             {% endfor %}

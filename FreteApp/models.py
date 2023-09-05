@@ -1,4 +1,5 @@
 from django.db import models
+from secrets import token_urlsafe
 
 
 class Endereco(models.Model):
@@ -33,9 +34,16 @@ class Entrega(models.Model):
     valor_entrega = models.DecimalField(
         max_digits=5, decimal_places=2, null=True, blank=True
     )
+    identificador = models.CharField(max_length=24, null=True, blank=True)
 
     def __str__(self) -> str:
         return self.nome_cliente
+
+    def save(self, *args, **kwargs):
+        if not self.identificador:
+            self.identificador = token_urlsafe(16)
+
+        super(Entrega, self).save(*args, **kwargs)
 
     class Meta:
         verbose_name_plural = "Entregas"
