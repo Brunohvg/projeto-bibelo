@@ -2,10 +2,43 @@
 
 {% block conteudo %}
 
-<div>{{entrega}}</div>
-<div>{{entrega}} </div>
+<section class="section-body">
+    <div class="row">
+        <div class="col-12">
+            <div class="card profile-widget mt-0">
+                <div class="profile-widget-description px-4">
+                    <div class="profile-widget-name mt-2">
+                        <h3>{{entrega.nome_cliente}}</h3>
+                    </div>
+                    <ul class="list-unstyled list-unstyled-border list-unstyled-noborder mb-0">
+                        <li class="pb-1 mb-1"><strong class="mr-1">Nº Pedido:</strong> {{entrega.numero_pedido}}</li>
+                        <li class="pb-1 mb-1"><strong class="mr-1">Data de criação:</strong> {{entrega.criado}}</li>
+                        <li class="pb-1 mb-1"><strong class="mr-1">Endereço:</strong> {{entrega.endereco.rua}},
+                            {{entrega.endereco.numero_casa}} - {{entrega.endereco.bairro}}
+                            - {{entrega.endereco.cidade}}, {{entrega.endereco.cep}} - {{entrega.endereco.complemento}}
+                        </li>
+                        <li class="pb-1 mb-1"><strong class="mr-1">Telefone:</strong> {{entrega.telefone}}</li>
+                        <li class="pb-1 mb-1"><strong class="mr-1">Informações adicional:</strong>
+                            {{entrega.info_adicional}}</li>
+                        <li class="pb-1 mb-1"><strong class="mr-1">Valor da corrida:</strong>
+                            {{entrega.valor_entrega}}</li>
+                        <div>
+                            <a class="btn btn-light" href="">Editar</a>
+                            <a class="btn btn-light" href="">Deletar</a>
+                            <a class="btn btn-light" href="{% url 'gerar_os' entrega.identificador %}">Imprimir</a>
+                            <br>
+                            <br>
+                        </div>
 
-<a href="{% url 'gerar_os' entrega.identificador %}">teste</a>
+                    </ul>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</section>
+
+
 
 
 
