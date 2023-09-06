@@ -2,6 +2,8 @@
 
 {% block conteudo %}
 
+{% include 'FreteApp\poupaps\exclusao.html' %}
+
 <section class="section-body">
     <div class="row">
         <div class="col-12">
@@ -23,9 +25,10 @@
                         <li class="pb-1 mb-1"><strong class="mr-1">Valor da corrida:</strong>
                             {{entrega.valor_entrega}}</li>
                         <div>
-                            <a class="btn btn-light" href="">Editar</a>
-                            <a class="btn btn-light" href="{% url 'delete' entrega.identificador %}">Deletar</a>
-                            <a class="btn btn-light" href="{% url 'gerar_os' entrega.identificador %}">Imprimir</a>
+                            <a class="btn btn-danger m-1" data-bs-toggle="modal" data-bs-target="#exampleModal"
+                                href="">Deletar</a>
+                            <a class="btn btn-success m-1"
+                                href="{% url 'gerar_os' entrega.identificador %}">Imprimir</a>
                             <br>
                             <br>
                         </div>

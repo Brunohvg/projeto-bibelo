@@ -1,5 +1,6 @@
 from django.shortcuts import render, get_object_or_404
 from .models import Endereco, Entrega
+from django.urls import reverse
 from django.http import HttpResponse, HttpResponseRedirect
 from django.utils import timezone
 from django.contrib import messages
@@ -12,10 +13,6 @@ from api_external.api_funcitions import (
 )
 from fpdf import FPDF
 from api_external.create_pdf import ggerar_os
-
-from reportlab.lib.pagesizes import letter
-from reportlab.platypus import SimpleDocTemplate, Paragraph, Spacer
-from reportlab.lib.styles import getSampleStyleSheet
 
 
 def home(request):
@@ -160,12 +157,10 @@ def gerar_os(request, identificador):
     return ggerar_os(request, identificador=identificador)
 
 
-from django.shortcuts import get_object_or_404
-
-
 def delete(request, identificador):
     # Certifique-se de que 'Entrega' é o modelo correto que você deseja excluir
     entrega = get_object_or_404(Entrega, identificador=identificador)
-    entrega.delete()
-    # Redirecionar ou retornar uma resposta apropriada após a exclusão
-    return HttpResponse("visualizar_cotacao")
+    entrega.endereco.delete()
+
+    # Redirecionar para a página que lista todas as entregas após a exclusão
+    return HttpResponseRedirect(reverse('listar_cotacoes'))

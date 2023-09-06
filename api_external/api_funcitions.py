@@ -92,7 +92,7 @@ def consultar_valor_motoboy(cep):
         valor_boy = int(float(response["order"]["payment_amount"]))
 
         if valor_boy <= 18:
-            valor = "18,00"
+            valor = "18.00"
             return valor
 
         else:
