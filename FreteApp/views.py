@@ -168,4 +168,4 @@ def delete(request, identificador):
     entrega = get_object_or_404(Entrega, identificador=identificador)
     entrega.delete()
     # Redirecionar ou retornar uma resposta apropriada após a exclusão
-    return HttpResponseRedirect("/algum_url_apropriado/")
+    return HttpResponse("visualizar_cotacao")

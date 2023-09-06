@@ -24,7 +24,7 @@
                             {{entrega.valor_entrega}}</li>
                         <div>
                             <a class="btn btn-light" href="">Editar</a>
-                            <a class="btn btn-light" href="">Deletar</a>
+                            <a class="btn btn-light" href="{% url 'delete' entrega.identificador %}">Deletar</a>
                             <a class="btn btn-light" href="{% url 'gerar_os' entrega.identificador %}">Imprimir</a>
                             <br>
                             <br>
