@@ -1,0 +1,15 @@
+{% extends 'base.html' %}
+
+{# Este é um comentário em Jinja2. Ele não será renderizado no HTML final. #}
+
+{% block conteudo %}
+
+{% include 'FreteApp/includes/form-consultar-valores.html' %}
+
+{% include 'FreteApp/includes/cards.html' %}
+
+{% include 'FreteApp/includes/modal.html' %}
+
+{% endfor %}
+
+{% endblock %}

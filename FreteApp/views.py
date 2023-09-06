@@ -164,3 +164,8 @@ def delete(request, identificador):
 
     # Redirecionar para a página que lista todas as entregas após a exclusão
     return HttpResponseRedirect(reverse('listar_cotacoes'))
+
+
+def editar(request, identificador):
+    entrega = get_object_or_404(Entrega, identificador=identificador)
+    
